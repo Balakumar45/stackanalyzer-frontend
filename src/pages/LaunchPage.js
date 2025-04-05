@@ -67,7 +67,13 @@ const LaunchPage = ({ setFileName }) => {
                             <Typography variant="h6" sx={{ marginBottom: 2 }}>
                                 <b>Upload Stacktrace File</b>
                             </Typography>
-
+                            <Typography 
+                                variant="body2" 
+                                align='center'
+                                sx={{ marginBottom: 1 }}
+                            >
+                                Supports .zip file only
+                            </Typography>
                             <TextField
                                 type="file"
                                 onChange={handleFileChange}

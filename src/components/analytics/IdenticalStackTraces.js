@@ -148,7 +148,8 @@ const IdenticalStackTraces = ({ fileName, selectedMinutes }) => {
             <TableRow>
               <TableCell sx={{
                 fontWeight: 'bold',
-                backgroundColor: 'lightblue',
+                backgroundColor: 'black',
+                color: 'white',
                 fontSize: '1rem', // Increased font size
                 padding: '16px', // Increased padding
                 borderRight: '2px solid white' // Right border for columns
@@ -157,7 +158,8 @@ const IdenticalStackTraces = ({ fileName, selectedMinutes }) => {
               </TableCell>
               <TableCell sx={{
                 fontWeight: 'bold',
-                backgroundColor: 'lightblue',
+                backgroundColor: 'black',
+                color: 'white',
                 fontSize: '1rem',
                 padding: '16px',
                 borderLeft: '2px solid white', // Left border for columns
