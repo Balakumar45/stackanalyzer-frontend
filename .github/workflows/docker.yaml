@@ -19,7 +19,7 @@ jobs:
       with:
         registry: ghcr.io
         username: Balakumar45
-        password: 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
+        password: 
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
