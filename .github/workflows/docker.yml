@@ -28,4 +28,8 @@ jobs:
         file: ./Dockerfile
         platforms: linux/arm64
         push: true
+<<<<<<< HEAD
         tags: ghcr.io/${{ secrets.GHCR_USERNAME }}/react-perfanalytics:latest
+=======
+        tags: ghcr.io/${{ secrets.GHCR_USERNAME }}/react-perfanalytics:latest
+>>>>>>> 6332a6c03d8426d7773c76918ed56def37fc62fe
