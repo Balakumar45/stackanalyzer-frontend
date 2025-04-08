@@ -4,11 +4,12 @@ import { Pie } from "react-chartjs-2";
 
 const ThreadSummaryCount = ({ fileName, selectedMinutes, threadSummary, selectedState, setSelectedState, stackTraces, loading, lastTraceElementRef, hasMore }) => {
   // Null check for threadSummary
-  if (!threadSummary) {
+  if (!threadSummary || !selectedMinutes || !threadSummary[selectedMinutes]) {
     return <Typography>Loading thread summary...</Typography>;
   }
 
-  const threadStates = threadSummary.threadStates || [];
+  const currentSummary = threadSummary[selectedMinutes];
+  const threadStates = currentSummary.threadStates || [];
 
   const statePieData = {
     labels: threadStates.map((state) => state.state),
@@ -24,7 +25,7 @@ const ThreadSummaryCount = ({ fileName, selectedMinutes, threadSummary, selected
     labels: ["Daemon Threads", "Non-Daemon Threads"],
     datasets: [
       {
-        data: [threadSummary.daemonThreadCount || 0, threadSummary.nonDaemonThreadCount || 0],
+        data: [threadSummary[selectedMinutes].daemonThreadCount || 0, threadSummary[selectedMinutes].nonDaemonThreadCount || 0],
         backgroundColor: ["#008080", "#FFA500"],
       },
     ],
@@ -34,7 +35,7 @@ const ThreadSummaryCount = ({ fileName, selectedMinutes, threadSummary, selected
     <>
       {/* Total Threads */}
       <Paper sx={{ padding: 1, textAlign: "center", backgroundColor: "#f4f4f4", marginBottom: 2 }}>
-        <Typography variant="h5">Total Threads: {threadSummary.totalThreads}</Typography>
+        <Typography variant="h5">Total Threads: {threadSummary[selectedMinutes].totalThreads}</Typography>
       </Paper>
 
       <Grid container spacing={2}>
@@ -59,8 +60,8 @@ const ThreadSummaryCount = ({ fileName, selectedMinutes, threadSummary, selected
         <Grid item xs={12} md={6}>
           <Typography variant="h6">Daemon vs Non-Daemon Threads</Typography>
           <Grid container spacing={2}>
-            {[{ label: 'Daemon Threads', count: threadSummary.daemonThreadCount, percentage: threadSummary.daemonThreadPercentage },
-              { label: 'Non-Daemon Threads', count: threadSummary.nonDaemonThreadCount, percentage: threadSummary.nonDaemonThreadPercentage }]
+            {[{ label: 'Daemon Threads', count: threadSummary[selectedMinutes].daemonThreadCount, percentage: threadSummary[selectedMinutes].daemonThreadPercentage },
+              { label: 'Non-Daemon Threads', count: threadSummary[selectedMinutes].nonDaemonThreadCount, percentage: threadSummary[selectedMinutes].nonDaemonThreadPercentage }]
               .map((item, index) => (
                 <Grid item xs={6} key={index}>
                   <Paper sx={{ padding: 1, textAlign: "center", backgroundColor: "#f4f4f4" }}>
