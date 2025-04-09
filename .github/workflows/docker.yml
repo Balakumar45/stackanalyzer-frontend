@@ -2,7 +2,7 @@ name: Build and Push React PerfAnalytics Frontend Docker
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   build:
