@@ -19,8 +19,6 @@ import ComparativeAnalysis from "../components/analytics/ComparativeAnalysis";
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const backendHost = process.env.REACT_APP_BACKEND_HOST || '';
-
 const AnalyticsPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -73,7 +71,7 @@ const AnalyticsPage = () => {
       setLoading(true);
       const minutes = selectedMinutes.length > 1 ? [selectedTimestamp] : selectedMinutes;
       const queryString = `fileName=${fileName}&` + minutes.map((min) => `minutes=${min}`).join("&");
-      const url = `${backendHost}/api/get-thread-summary?${queryString}`;
+      const url = `/api/get-thread-summary?${queryString}`;
       axios
         .get(url)
         .then((res) => {

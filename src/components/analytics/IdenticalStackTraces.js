@@ -30,8 +30,6 @@ ChartJS.register(
   Legend
 );
 
-const backendHost = process.env.REACT_APP_BACKEND_HOST || '';
-
 const IdenticalStackTraces = ({ fileName, selectedMinutes }) => {
   const [identicalTraces, setIdenticalTraces] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -40,7 +38,7 @@ const IdenticalStackTraces = ({ fileName, selectedMinutes }) => {
   useEffect(() => {
     if (fileName && selectedMinutes) {
       const queryString = `fileName=${fileName}&minutes=${selectedMinutes}`;
-      const url = `${backendHost}/api/get-identical-stack-traces?${queryString}`;
+      const url = `/api/get-identical-stack-traces?${queryString}`;
       axios
         .get(url)
         .then((res) => {
