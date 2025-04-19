@@ -5,6 +5,8 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
+const backendHost = process.env.REACT_APP_BACKEND_HOST || '';
+
 const LastExecutedMethods = ({ fileName, selectedMinutes }) => {
   const [methodStats, setMethodStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -15,7 +17,7 @@ const LastExecutedMethods = ({ fileName, selectedMinutes }) => {
   useEffect(() => {
     if (fileName && selectedMinutes) {
       const queryString = `fileName=${fileName}&minutes=${selectedMinutes}`;
-      const url = `http://localhost:8080/api/last-executed-methods?${queryString}`;
+      const url = `${backendHost}/api/last-executed-methods?${queryString}`;
       
       axios.get(url)
         .then(res => {
@@ -34,7 +36,7 @@ const LastExecutedMethods = ({ fileName, selectedMinutes }) => {
     setLoadingTraces(true);
     
     const queryString = `fileName=${fileName}&minutes=${selectedMinutes}&method=${encodeURIComponent(method)}`;
-    const url = `http://localhost:8080/api/get-method-traces?${queryString}`;
+    const url = `${backendHost}/api/get-method-traces?${queryString}`;
     
     axios.get(url)
       .then(res => {

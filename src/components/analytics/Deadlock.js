@@ -1,4 +1,5 @@
 import { Box, Typography, Alert} from "@mui/material";
+
 const Deadlocks = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>

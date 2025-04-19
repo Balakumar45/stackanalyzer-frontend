@@ -18,6 +18,8 @@ const LaunchPage = ({ setFileName }) => {
     };
 
     const navigate = useNavigate();
+
+    const backendHost = process.env.REACT_APP_BACKEND_HOST || '';
     
     const handleUpload = async (options = { }) => {
         if (!selectedFile) {
@@ -38,7 +40,7 @@ const LaunchPage = ({ setFileName }) => {
 
         setUploading(true);
         try {
-            const response = await axios.post("http://localhost:8080/api/upload", formData, {
+            const response = await axios.post("${backendHost}/api/upload", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
     

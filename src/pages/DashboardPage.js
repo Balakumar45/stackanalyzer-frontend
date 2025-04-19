@@ -5,6 +5,8 @@ import axios from "axios";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
+const backendHost = process.env.REACT_APP_BACKEND_HOST || '';
+
 const Dashboard = ({ fileName }) => {
     const [hours, setHours] = useState([]); // List of available hours
     const [selectedHour, setSelectedHour] = useState(null);
@@ -16,7 +18,7 @@ const Dashboard = ({ fileName }) => {
     useEffect(() => {
       if (fileName) {
           setLoading(true);
-          axios.get(`http://localhost:8080/api/get-hours?fileName=${fileName}`)
+          axios.get(`${backendHost}/api/get-hours?fileName=${fileName}`)
               .then(response => {
                   setHours(response.data);
                   setLoading(false);
@@ -32,7 +34,7 @@ const Dashboard = ({ fileName }) => {
     setSelectedHour(hour);
     sessionStorage.setItem("previousSelectedHour", hour);
     setLoading(true);
-    axios.get(`http://localhost:8080/api/get-minutes?fileName=${fileName}&selectedHour=${hour}`)
+    axios.get(`${backendHost}/api/get-minutes?fileName=${fileName}&selectedHour=${hour}`)
         .then(response => {
             setMinutes(response.data);
             setLoading(false);
