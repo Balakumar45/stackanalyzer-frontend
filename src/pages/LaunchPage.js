@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
+const apiBaseUrl = process.env.REACT_APP_API_URL;
+
 const LaunchPage = ({ setFileName }) => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploading, setUploading] = useState(false);
@@ -38,7 +40,7 @@ const LaunchPage = ({ setFileName }) => {
 
         setUploading(true);
         try {
-            const response = await axios.post("/api/upload", formData, {
+            const response = await axios.post(`${apiBaseUrl}/api/upload`, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
     

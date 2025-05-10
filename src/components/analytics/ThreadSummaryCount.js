@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Box, Typography, Grid, Paper, Button } from "@mui/material";
 import { Pie } from "react-chartjs-2";
 
+const apiBaseUrl = process.env.REACT_APP_API_URL;
+
 const ThreadSummaryCount = ({ fileName, selectedMinutes, threadSummary, selectedState, setSelectedState }) => {
   // Local state for stack traces
   const [stackTraces, setStackTraces] = useState([]);
@@ -46,7 +48,7 @@ const ThreadSummaryCount = ({ fileName, selectedMinutes, threadSummary, selected
     const queryString = `fileName=${fileName}&` +
       selectedMinutes.map(min => `minutes=${min}`).join('&') +
       `&state=${state}&page=${pageNumber}`;
-    const url = `/api/get-state-traces?${queryString}`;
+    const url = `${apiBaseUrl}/api/get-state-traces?${queryString}`;
     try {
       const response = await fetch(url);
       const data = await response.text();

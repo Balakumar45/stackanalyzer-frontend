@@ -6,6 +6,8 @@ import {
 import { Pie } from "react-chartjs-2";
 import axios from "axios";
 
+const apiBaseUrl = process.env.REACT_APP_API_URL;
+
 const StackLengthStats = ({ fileName, selectedMinutes }) => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -16,7 +18,7 @@ const StackLengthStats = ({ fileName, selectedMinutes }) => {
   useEffect(() => {
     if (fileName && selectedMinutes) {
       const queryString = `fileName=${fileName}&minutes=${selectedMinutes}`;
-      const url = `/api/get-stack-length-stats?${queryString}`;
+      const url = `${apiBaseUrl}/api/get-stack-length-stats?${queryString}`;
       
       axios.get(url)
         .then(res => {
@@ -35,7 +37,7 @@ const StackLengthStats = ({ fileName, selectedMinutes }) => {
     setLoadingTraces(true);
     
     const queryString = `fileName=${fileName}&minutes=${selectedMinutes}&category=${category}`;
-    const url = `/api/get-stacks-by-length?${queryString}`;
+    const url = `${apiBaseUrl}/api/get-stacks-by-length?${queryString}`;
     
     axios.get(url)
       .then(res => {

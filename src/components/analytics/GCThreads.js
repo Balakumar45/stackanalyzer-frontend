@@ -8,6 +8,8 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
+const apiBaseUrl = process.env.REACT_APP_API_URL;
+
 const GCThreads = ({ fileName, selectedMinutes }) => {
   const [gcThreadCount, setGcThreadCount] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -16,7 +18,7 @@ const GCThreads = ({ fileName, selectedMinutes }) => {
   useEffect(() => {
     if (fileName && selectedMinutes) {
       const queryString = `fileName=${fileName}&minutes=${selectedMinutes}`;
-      const url = `/api/get-gc-thread-count?${queryString}`;
+      const url = `${apiBaseUrl}/api/get-gc-thread-count?${queryString}`;
       
       axios.get(url)
         .then(res => {

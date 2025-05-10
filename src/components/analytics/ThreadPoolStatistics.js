@@ -3,6 +3,8 @@ import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead
 import { Pie } from "react-chartjs-2";
 import axios from "axios";
 
+const apiBaseUrl = process.env.REACT_APP_API_URL;
+
 const ThreadPoolStatistics = ({ fileName, selectedMinutes }) => {
   const [threadPoolData, setThreadPoolData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,7 +30,7 @@ const ThreadPoolStatistics = ({ fileName, selectedMinutes }) => {
   useEffect(() => {
     if (fileName && selectedMinutes) {
       const queryString = `fileName=${fileName}&minutes=${selectedMinutes}`;
-      const url = `/api/get-thread-pool-statistics?${queryString}`;
+      const url = `${apiBaseUrl}/api/get-thread-pool-statistics?${queryString}`;
       axios.get(url)
         .then((res) => {
           setThreadPoolData(res.data);

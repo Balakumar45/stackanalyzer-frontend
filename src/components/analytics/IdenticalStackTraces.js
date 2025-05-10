@@ -30,6 +30,8 @@ ChartJS.register(
   Legend
 );
 
+const apiBaseUrl = process.env.REACT_APP_API_URL;
+
 const IdenticalStackTraces = ({ fileName, selectedMinutes }) => {
   const [identicalTraces, setIdenticalTraces] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -38,7 +40,7 @@ const IdenticalStackTraces = ({ fileName, selectedMinutes }) => {
   useEffect(() => {
     if (fileName && selectedMinutes) {
       const queryString = `fileName=${fileName}&minutes=${selectedMinutes}`;
-      const url = `/api/get-identical-stack-traces?${queryString}`;
+      const url = `${apiBaseUrl}/api/get-identical-stack-traces?${queryString}`;
       axios
         .get(url)
         .then((res) => {

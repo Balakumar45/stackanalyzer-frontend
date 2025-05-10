@@ -17,6 +17,7 @@ ChartJS.register(
   ArcElement
 );
 
+const apiBaseUrl = process.env.REACT_APP_API_URL;
 const ComparativeAnalysis = ({ fileName, selectedMinutes }) => {
   const [threadSummary, setThreadSummary] = useState(null);
   const [threadStatesData, setThreadStatesData] = useState(null);
@@ -31,7 +32,7 @@ const ComparativeAnalysis = ({ fileName, selectedMinutes }) => {
     if (fileName && selectedMinutes?.length > 0) {
       setLoadingSummary(true);
       const queryString = `fileName=${fileName}&` + selectedMinutes.map(min => `minutes=${min}`).join('&');
-      const url = `/api/get-thread-summary?${queryString}`;
+      const url = `${apiBaseUrl}/api/get-thread-summary?${queryString}`;
       axios
         .get(url)
         .then((res) => {
@@ -53,7 +54,7 @@ const ComparativeAnalysis = ({ fileName, selectedMinutes }) => {
     if (fileName && selectedMinutes?.length > 0) {
       setLoadingStates(true);
       const queryString = `filename=${fileName}&` + selectedMinutes.map(min => `minutes=${min}`).join('&');
-      const url = `/api/get-comparative-thread-state?${queryString}`;
+      const url = `${apiBaseUrl}/api/get-comparative-thread-state?${queryString}`;
       axios
         .get(url)
         .then((res) => {
@@ -75,7 +76,7 @@ const ComparativeAnalysis = ({ fileName, selectedMinutes }) => {
       if (fileName && selectedMinutes?.length > 0) {
         setLoadingPools(true);
         const queryString = `filename=${fileName}&` + selectedMinutes.map(min => `minutes=${min}`).join('&');
-        const url = `/api/get-comparative-thread-pool?${queryString}`;
+        const url = `${apiBaseUrl}/api/get-comparative-thread-pool?${queryString}`;
         axios
           .get(url)
           .then((res) => {
