@@ -51,7 +51,10 @@ const ComparativeAnalysis = ({ fileName, selectedMinutes }) => {
 
   // Fetch thread states data
   useEffect(() => {
-    if (fileName && selectedMinutes?.length > 0) {
+    if (fileName && 
+      selectedMinutes?.length > 0 &&
+      threadSummary && 
+      !loadingSummary) {
       setLoadingStates(true);
       const queryString = `filename=${fileName}&` + selectedMinutes.map(min => `minutes=${min}`).join('&');
       const url = `${apiBaseUrl}/api/get-comparative-thread-state?${queryString}`;
@@ -69,11 +72,15 @@ const ComparativeAnalysis = ({ fileName, selectedMinutes }) => {
           setLoadingStates(false);
         });
     }
-  }, [fileName, selectedMinutes]);
+  }, [fileName, selectedMinutes,threadSummary, loadingSummary]);
 
     // Fetch thread pool data
     useEffect(() => {
-      if (fileName && selectedMinutes?.length > 0) {
+      if (fileName && 
+        selectedMinutes?.length > 0&&
+        threadSummary && 
+        !loadingSummary &&
+        !loadingStates) {
         setLoadingPools(true);
         const queryString = `filename=${fileName}&` + selectedMinutes.map(min => `minutes=${min}`).join('&');
         const url = `${apiBaseUrl}/api/get-comparative-thread-pool?${queryString}`;
@@ -91,7 +98,7 @@ const ComparativeAnalysis = ({ fileName, selectedMinutes }) => {
             setLoadingPools(false);
           });
       }
-    }, [fileName, selectedMinutes]);
+    }, [fileName, selectedMinutes,threadSummary, loadingSummary, loadingStates]);
   
     if (loadingSummary || loadingStates || loadingPools) {
       return (
