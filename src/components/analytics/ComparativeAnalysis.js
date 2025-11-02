@@ -5,17 +5,7 @@ import axios from "axios";
 import {Chart as ChartJS,CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend,BarElement,ArcElement} from 'chart.js';
 
 // Register ChartJS components
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  BarElement,
-  ArcElement
-);
+ChartJS.register( CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, BarElement, ArcElement );
 
 const apiBaseUrl = process.env.REACT_APP_API_URL;
 const ComparativeAnalysis = ({ fileName, selectedMinutes }) => {
@@ -168,14 +158,14 @@ const ComparativeAnalysis = ({ fileName, selectedMinutes }) => {
 
     return (
       <Box>
-        <Paper sx={{ padding: 1, textAlign: "center", backgroundColor: "#f4f4f4", marginBottom: 2 }}>
-          <Typography variant="h5">Comparative Analysis - Thread Count Statistics</Typography>
+        <Paper sx={{ padding: 0.2, textAlign: "center", backgroundColor: "#f4f4f4", marginBottom: 1 }}>
+          <Typography variant="h6">Comparative Analysis - Thread Count Statistics</Typography>
         </Paper>
-        <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start' }}>
+        <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-start' }}>
           <Box sx={{ width: '50%' }}>
-            <Paper sx={{ padding: 1, textAlign: "center", backgroundColor: "#f4f4f4", marginBottom: 2 }}>
-              <Typography variant="h6" textAlign={'center'}>Thread Count Table</Typography>
-              <Table size="medium">
+            <Paper sx={{ padding: 1, textAlign: "center", backgroundColor: "#f4f4f4", marginBottom: 1 }}>
+              <Typography variant="h7" sx={{textAlign:'center', fontWeight:'bold'}}>Thread Count Table</Typography>
+              <Table size="small">
                 <TableHead>
                   <TableRow>
                     <TableCell sx={{fontWeight:'bold', backgroundColor:'black', color:'white'}}>
@@ -212,7 +202,7 @@ const ComparativeAnalysis = ({ fileName, selectedMinutes }) => {
           
           <Box sx={{ width: '50%' }}>
             <Paper sx={{ padding: 1, textAlign: "center", backgroundColor: "#f4f4f4", marginBottom: 2 }}>
-              <Typography variant="h6" textAlign={'center'}>Thread Count Line Graph</Typography>
+              <Typography variant="h7" sx={{textAlign:'center', fontWeight:'bold'}}>Thread Count Line Graph</Typography>
               <Line
                 data={chartData}
                 options={{
@@ -220,8 +210,9 @@ const ComparativeAnalysis = ({ fileName, selectedMinutes }) => {
                   maintainAspectRatio: true,
                   height: 300,
                   plugins: {
-                    legend: {
+                    legend: { 
                       position: 'top',
+                      labels: { font: {size:10, }}
                     }
                   },
                   scales: {
@@ -264,17 +255,17 @@ const ComparativeAnalysis = ({ fileName, selectedMinutes }) => {
     };
 
     return (
-      <Box mt={4}>
-        <Paper sx={{ padding: 1, textAlign: "center", backgroundColor: "#f4f4f4", marginBottom: 2 }}>
-          <Typography variant="h5">Comparative Analysis - Thread States</Typography>
+      <Box mt={1}>
+        <Paper sx={{ padding: 0.2, textAlign: "center", backgroundColor: "#f4f4f4", marginBottom: 1 }}>
+          <Typography variant="h6">Comparative Analysis - Thread States</Typography>
         </Paper>
         <TableContainer component={Paper} sx={{ maxHeight: 400 }}>
-          <Table stickyHeader size="medium">
+          <Table stickyHeader size="small">
             <TableHead>
               <TableRow>
-                <TableCell sx={{ fontWeight: 'bold',backgroundColor:'black', color:'white' }}>Thread</TableCell>
+                <TableCell sx={{ fontWeight: 'bold',backgroundColor:'black', color:'white',fontSize: '0.75rem' }}>Thread</TableCell>
                 {threadStatesData.timestamps.map((timestamp) => (
-                  <TableCell sx={{ fontWeight: 'bold',backgroundColor:'black', color:'white' }} key={timestamp}>
+                  <TableCell sx={{ fontWeight: 'bold',backgroundColor:'black', color:'white',fontSize: '0.75rem' }} key={timestamp}>
                     Stacktrace @{timestamp}
                   </TableCell>
                 ))}
@@ -283,11 +274,11 @@ const ComparativeAnalysis = ({ fileName, selectedMinutes }) => {
             <TableBody>
               {threadStatesData.threadInfos.map((threadInfo) => (
                 <TableRow key={threadInfo.threadName}>
-                  <TableCell>{threadInfo.threadName}</TableCell>
+                  <TableCell sx={{fontSize: '0.75rem'}}>{threadInfo.threadName}</TableCell>
                   {threadStatesData.timestamps.map((timestamp) => {
                     const state = threadInfo.states[timestamp] || 'UNKNOWN';
                     return (
-                      <TableCell key={`${threadInfo.threadName}-${timestamp}`}>
+                      <TableCell sx={{fontSize: '0.75rem'}} key={`${threadInfo.threadName}-${timestamp}`}>
                         <Box display="flex" alignItems="center">
                           <Box
                             sx={{
@@ -295,7 +286,7 @@ const ComparativeAnalysis = ({ fileName, selectedMinutes }) => {
                               height: 20,
                               borderRadius: '4px',
                               marginRight: 1,
-                              backgroundColor: getStateColor(state)
+                              backgroundColor: getStateColor(state),
                             }}
                             title={state}
                           />
@@ -355,13 +346,13 @@ const ComparativeAnalysis = ({ fileName, selectedMinutes }) => {
   
       return (
         <Box mt={4}>
-          <Paper sx={{ padding: 1, textAlign: "center", backgroundColor: "#f4f4f4", marginBottom: 2 }}>
-            <Typography variant="h5">Comparative Analysis - Thread Pool Statistics</Typography>
+          <Paper sx={{ padding: 0.2, textAlign: "center", backgroundColor: "#f4f4f4", marginBottom: 1 }}>
+            <Typography variant="h6">Comparative Analysis - Thread Pool Statistics</Typography>
           </Paper>
   
           {/* Bar Chart for Top 5 Thread Pools */}
-          <Paper sx={{ padding: 2, marginBottom: 2 }}>
-            <Typography variant="h6" textAlign="center" gutterBottom>
+          <Paper sx={{ padding: 1, marginBottom: 2, textAlign: "center" }}>
+            <Typography variant="h7" fontWeight={'bold'}>
               Top 5 Thread Pools Count
             </Typography>
             <Bar
@@ -395,22 +386,22 @@ const ComparativeAnalysis = ({ fileName, selectedMinutes }) => {
           </Paper>
   
           {/* Thread Pool State Distribution Table */}
-          <Paper sx={{ padding: 1, textAlign: "center", backgroundColor: "#f4f4f4", marginBottom: 2 }}>
+          <Paper sx={{ padding: 0.2, textAlign: "center", backgroundColor: "#f4f4f4", marginBottom: 1 }}>
             <Typography variant="h6" textAlign="center">
               Thread Pool State Distribution
             </Typography>
           </Paper>
           <TableContainer component={Paper}>
-            <Table>
+            <Table size='small'>
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 'bold', backgroundColor: 'black', color: 'white' }}>
+                  <TableCell sx={{ fontWeight: 'bold', backgroundColor: 'black', color: 'white', fontSize: '0.75rem'}}>
                     Thread Pool
                   </TableCell>
                   {threadPoolData.timestamps.map(timestamp => (
                     <TableCell 
                       key={timestamp} 
-                      sx={{ fontWeight: 'bold', backgroundColor: 'black', color: 'white' }}
+                      sx={{ fontWeight: 'bold', backgroundColor: 'black', color: 'white', fontSize: '0.75rem', textAlign:'center' }}
                     >
                       Stacktrace @{timestamp}
                     </TableCell>
@@ -463,14 +454,14 @@ const ComparativeAnalysis = ({ fileName, selectedMinutes }) => {
                             </Box>
                             <Box display="flex" flexWrap="wrap" justifyContent="center" mt={1}>
                               {states.map(state => (
-                                <Box key={state} display="flex" alignItems="center" mr={2} mb={1}>
+                                <Box key={state} display="flex" alignItems="center" mr={1} mb={0.2}>
                                   <Box
-                                    width={12}
-                                    height={12}
+                                    width={10}
+                                    height={10}
                                     bgcolor={getStateColor(state)}
                                     mr={0.5}
                                   />
-                                  <Typography variant="caption">
+                                  <Typography variant="caption" fontSize={10}>
                                     {state}: {stateCounts[state]}
                                   </Typography>
                                 </Box>

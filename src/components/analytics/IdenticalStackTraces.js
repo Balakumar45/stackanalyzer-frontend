@@ -1,37 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
-import { 
-  Box, 
-  Typography, 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableContainer, 
-  TableHead, 
-  TableRow, 
-  Paper 
-} from "@mui/material";
-import {
-  Chart as ChartJS,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  Tooltip,
-  Legend
-} from 'chart.js';
+import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
+import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import axios from "axios";
 
 // Register Chart.js components
-ChartJS.register(
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  Tooltip,
-  Legend
-);
-
+ChartJS.register( BarElement, CategoryScale, LinearScale, Tooltip, Legend );
 const apiBaseUrl = process.env.REACT_APP_API_URL;
-
 const IdenticalStackTraces = ({ fileName, selectedMinutes }) => {
   const [identicalTraces, setIdenticalTraces] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -52,10 +27,8 @@ const IdenticalStackTraces = ({ fileName, selectedMinutes }) => {
           setLoading(false);
         });
     }
-  
     // Store the current chart instance in a variable
     const chartInstance = chartRef.current;
-  
     return () => {
       // Cleanup chart instance when component unmounts
       if (chartInstance && chartInstance.chartInstance) {
@@ -63,15 +36,13 @@ const IdenticalStackTraces = ({ fileName, selectedMinutes }) => {
       }
     };
   }, [fileName, selectedMinutes]);
-
   if (loading) {
     return <Typography>Loading identical stack traces...</Typography>;
   }
-
   if (identicalTraces.length === 0) {
     return (
       <Box>
-        <Typography variant="h5" sx={{ mb: 1 }}>
+        <Typography variant="h6" sx={{ mb: 0.1, fontWeight: "bold" }}>
           Threads with Identical Stack Trace
         </Typography>
         <Typography>No identical stack traces found.</Typography>
@@ -119,10 +90,10 @@ const IdenticalStackTraces = ({ fileName, selectedMinutes }) => {
 
   return (
     <Box>
-      <Typography variant="h5" sx={{ mb: 1 }}>
+      <Typography variant="h6" sx={{ mb: 0.1, fontWeight: "bold" }}>
         Threads with Identical Stack Trace
       </Typography>
-      <Typography variant="body2" sx={{ mb: 3, color: "text.secondary" }}>
+      <Typography variant="body2" sx={{ mb: 1, color: "text.secondary" }}>
         Threads with identical stack traces are grouped here. If many threads exhibit identical stack traces, it might indicate a concern (learn RSI Pattern).
       </Typography>
 
@@ -145,6 +116,7 @@ const IdenticalStackTraces = ({ fileName, selectedMinutes }) => {
             '&:first-of-type': { borderTopLeftRadius: '8px' },
             '&:last-of-type': { borderTopRightRadius: '8px' }
           }
+          
         }}>
           <TableHead>
             <TableRow>
@@ -152,9 +124,10 @@ const IdenticalStackTraces = ({ fileName, selectedMinutes }) => {
                 fontWeight: 'bold',
                 backgroundColor: 'black',
                 color: 'white',
-                fontSize: '1rem', // Increased font size
-                padding: '16px', // Increased padding
-                borderRight: '2px solid white' // Right border for columns
+                fontSize: '0.825rem', // Increased font size
+                padding: '2px', // Increased padding
+                borderRight: '2px solid white', // Right border for columns
+                textAlign: 'center',
               }}>
                 Thread Count
               </TableCell>
@@ -162,8 +135,8 @@ const IdenticalStackTraces = ({ fileName, selectedMinutes }) => {
                 fontWeight: 'bold',
                 backgroundColor: 'black',
                 color: 'white',
-                fontSize: '1rem',
-                padding: '16px',
+                fontSize: '0.825rem',
+                padding: '2px',
                 borderLeft: '2px solid white', // Left border for columns
                 textAlign: 'center'
               }}>
@@ -176,15 +149,17 @@ const IdenticalStackTraces = ({ fileName, selectedMinutes }) => {
               <TableRow key={`${trace.stackTraceHash}-${index}`} hover>
                 <TableCell sx={{
                   borderRight: '1px solid #e0e0e0',
-                  padding: '12px',
-                  textAlign: 'center'
+                  padding: '10px',
+                  textAlign: 'center',
+                  fontSize: '0.75rem'
                 }}>
                   {trace.count}
                 </TableCell>
                 <TableCell sx={{ 
                   whiteSpace: "pre-wrap", 
                   fontFamily: "monospace",
-                  padding: '12px'
+                  padding: '10px',
+                  fontSize: '0.75rem'
                 }}>
                   {trace.stackTrace}
                 </TableCell>

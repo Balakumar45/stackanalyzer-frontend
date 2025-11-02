@@ -68,19 +68,19 @@ const Dashboard = ({ fileName }) => {
     // Handle visualization
     const handleVisualize = () => {
         if (selectedMinutes.length > 0) {
-            navigate("/analytics", { state: { fileName,selectedHour, selectedMinutes } });
+            navigate("/analytics", { state: { analyticsType: "stacktrace",fileName,selectedHour, selectedMinutes } });
         }
     };
 
     return (
         <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', backgroundColor: '#f0f2f5', position: 'relative' }}>
             <Header />
-            <Container maxWidth="lg" sx={{ padding: '50px', flexGrow: 1, position: 'relative' }}>
-                <Paper elevation={3} sx={{ padding: '30px', textAlign: 'center', position: 'relative' }}>
-                    <Typography variant="h5" textAlign="center">
+            <Container maxWidth="lg" sx={{ padding: '20px', flexGrow: 1, position: 'relative' }}>
+                <Paper elevation={3} sx={{ padding: '20px', textAlign: 'center', position: 'relative' }}>
+                    <Typography variant="h6" textAlign="center">
                         Choose a particular hour available in the file
                     </Typography>
-                    <Grid container spacing={2} justifyContent="center" sx={{ padding: '20px' }}>
+                    <Grid container spacing={1} justifyContent="center" sx={{ padding: '10px' }}>
                         {Array.from({ length: 24 }, (_, i) => (
                             <Grid item key={i}>
                                 <Button
@@ -95,11 +95,11 @@ const Dashboard = ({ fileName }) => {
                         ))}
                     </Grid>
                     {selectedHour !== null && (
-                        <Box sx={{ mt: 3 }}>
-                            <Typography variant="h6" textAlign="center"> 
+                        <Box sx={{ mt: 2 }}>
+                            <Typography variant="h7" textAlign="center"> 
                             Below individual stack traces are available under the selected hour. Choose one for individual analysis or select up to three timestamps for comparative analysis
                             </Typography>
-                            <Grid container spacing={2} justifyContent="center" sx={{ padding: '20px' }}>
+                            <Grid container spacing={1} justifyContent="center" sx={{ padding: '10px' }}>
                                 {minutes.map((minute, index) => (
                                     <Grid item key={index}>
                                         <Button
@@ -117,7 +117,7 @@ const Dashboard = ({ fileName }) => {
                     {selectedHour !== null && (
                         <Button
                             variant="contained"
-                            sx={{ marginTop: "20px" }}
+                            sx={{ marginTop: "10px" }}
                             onClick={handleVisualize}
                             disabled={selectedMinutes.length === 0 || loading} // disable button if loading
                         >

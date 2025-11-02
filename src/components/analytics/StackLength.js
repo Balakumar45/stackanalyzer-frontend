@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Box, Typography, Table, TableBody, TableCell, TableContainer, 
-  TableHead, TableRow, Paper, Alert, Grid, Button 
-} from "@mui/material";
+import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Alert, Grid, Button } from "@mui/material";
 import { Pie } from "react-chartjs-2";
 import axios from "axios";
 
 const apiBaseUrl = process.env.REACT_APP_API_URL;
-
 const StackLengthStats = ({ fileName, selectedMinutes }) => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -70,19 +66,19 @@ const StackLengthStats = ({ fileName, selectedMinutes }) => {
 
   return (
     <Box>
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h6" sx={{ mb: 0.1, fontWeight: "bold" }}>
         Threads Stack Length
       </Typography>
-      <Typography variant="body2" color="text.secondary" gutterBottom>
+      <Typography variant="body2" sx={{ mb: 1, color: "text.secondary" }}>
         Lengthy stacks can cause StackOverflowError.
       </Typography>
 
       {hasCriticalStacks ? (
-        <Alert severity="warning" sx={{ mb: 2 }}>
+        <Alert severity="warning" sx={{ mb: 1 }}>
           Stack length greater than 100 can create StackOverflowError. Analyze its cause to avoid outages.
         </Alert>
       ) : (
-        <Alert severity="success" sx={{ mb: 2 }}>
+        <Alert severity="success" sx={{ mb: 1 }}>
           No problem in Stack trace length.
         </Alert>
       )}
@@ -98,7 +94,8 @@ const StackLengthStats = ({ fileName, selectedMinutes }) => {
                     fontWeight: 'bold', 
                     backgroundColor: 'black', 
                     color: 'white',
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    padding: 1
                   }}>
                     Stack Length
                   </TableCell>
@@ -106,7 +103,8 @@ const StackLengthStats = ({ fileName, selectedMinutes }) => {
                     fontWeight: 'bold', 
                     backgroundColor: 'black', 
                     color: 'white',
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    padding: 1
                   }}>
                     Thread Count
                   </TableCell>
@@ -149,7 +147,7 @@ const StackLengthStats = ({ fileName, selectedMinutes }) => {
 
         {/* Right Column - Pie Chart */}
         <Grid item xs={12} md={6}>
-          <Box sx={{ height: '300px', p: 2 }}>
+          <Box sx={{ height: '300px'}}>
             <Pie 
               data={pieData} 
               options={{ 
@@ -168,35 +166,20 @@ const StackLengthStats = ({ fileName, selectedMinutes }) => {
 
       {/* Stack Trace Display Area */}
       {selectedCategory && (
-        <Box mt={4}>
-          <Typography variant="h6" gutterBottom>
+        <Box sx={{ marginTop: 3, backgroundColor: '#fff', padding: 2, borderRadius: 2, maxHeight: '400px', overflowY: 'auto' }}>
+          <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 'bold' }}>
             Stack Traces (Length: {selectedCategory})
             {loadingTraces && <Typography variant="body2">Loading...</Typography>}
           </Typography>
           
           {stackTraces.length > 0 ? (
-            <Box sx={{ 
-              maxHeight: '400px', 
-              overflowY: 'auto',
-              border: '1px solid #e0e0e0',
-              borderRadius: 1,
-              p: 2
-            }}>
+            <Box>
               {stackTraces.map((trace, index) => (
                 <Box 
                   key={index} 
-                  sx={{ 
-                    mb: 2, 
-                    p: 2, 
-                    bgcolor: index % 2 === 0 ? '#fafafa' : 'white',
-                    borderRadius: 1
-                  }}
+                  sx={{ mb: 2, p:1, backgroundColor: '#f9f9f9', borderRadius: 1}}
                 >
-                  <Typography variant="body2" sx={{ 
-                    whiteSpace: 'pre-wrap', 
-                    fontFamily: 'monospace',
-                    fontSize: '0.85rem'
-                  }}>
+                   <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: '0.75rem'}}>
                     {trace}
                   </Typography>
                 </Box>
@@ -204,7 +187,7 @@ const StackLengthStats = ({ fileName, selectedMinutes }) => {
             </Box>
           ) : (
             !loadingTraces && (
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2">
                 No stack traces found in this category.
               </Typography>
             )

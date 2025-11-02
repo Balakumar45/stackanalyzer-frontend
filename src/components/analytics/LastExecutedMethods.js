@@ -54,10 +54,10 @@ const LastExecutedMethods = ({ fileName, selectedMinutes }) => {
 
   return (
     <Box>
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h6" sx={{ mb: 0.1, fontWeight: "bold" }}>
         Last Executed Methods
       </Typography>
-      <Typography variant="body2" color="text.secondary" gutterBottom>
+      <Typography variant="body2" sx={{ mb: 1, color: "text.secondary" }}>
         Below are methods that threads were executing when thread dump was captured
       </Typography>
 
@@ -65,12 +65,12 @@ const LastExecutedMethods = ({ fileName, selectedMinutes }) => {
       <TableContainer 
         component={Paper} 
         sx={{ 
-          mb: 4,
-          maxHeight: '400px', // Add fixed height
+          mb: 1,
+          maxHeight: '300px', // Add fixed height
           overflow: 'auto'    // Enable scrolling
         }}
       >
-        <Table stickyHeader> {/* Make header sticky */}
+        <Table size='small' stickyHeader> {/* Make header sticky */}
           <TableHead>
             <TableRow>
               <TableCell sx={{ 
@@ -80,7 +80,8 @@ const LastExecutedMethods = ({ fileName, selectedMinutes }) => {
                 textAlign: 'center',
                 position: 'sticky',  // Ensure header stays fixed
                 top: 0,             // Stick to top
-                zIndex: 1           // Keep header above content
+                zIndex: 1,           // Keep header above content
+                fontSize:'0.825rem'
               }}>
                 Thread Count
               </TableCell>
@@ -91,7 +92,8 @@ const LastExecutedMethods = ({ fileName, selectedMinutes }) => {
                 textAlign: 'center',
                 position: 'sticky',  // Ensure header stays fixed
                 top: 0,             // Stick to top
-                zIndex: 1           // Keep header above content
+                zIndex: 1,           // Keep header above content
+                fontSize:'0.825rem'
               }}>
                 Method
               </TableCell>
@@ -102,7 +104,8 @@ const LastExecutedMethods = ({ fileName, selectedMinutes }) => {
                 textAlign: 'center',
                 position: 'sticky',  // Ensure header stays fixed
                 top: 0,             // Stick to top
-                zIndex: 1           // Keep header above content
+                zIndex: 1,           // Keep header above content
+                fontSize:'0.825rem'
               }}>
                 Percentage
               </TableCell>
@@ -139,21 +142,15 @@ const LastExecutedMethods = ({ fileName, selectedMinutes }) => {
 
       {/* Stack Trace Display Area */}
       {selectedMethod && (
-        <Box sx={{ mt: 4 }}>
-          <Typography variant="h6" gutterBottom>
-            Stack Traces for Method: {selectedMethod}
+        <Box sx={{ marginTop: 3, backgroundColor: '#fff', padding: 2, borderRadius: 2, maxHeight: '400px', overflowY: 'auto' }}>
+          <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 'bold' }}>
+            Stack traces for method: {selectedMethod}
           </Typography>
           
           {loadingTraces ? (
             <Typography variant="body2">Loading...</Typography>
           ) : stackTraces.length > 0 ? (
-            <Box sx={{ 
-              maxHeight: '400px', 
-              overflowY: 'auto',
-              border: '1px solid #e0e0e0',
-              borderRadius: 1,
-              p: 2
-            }}>
+            <Box>
               {stackTraces.map((trace, index) => (
                 <Box 
                   key={index} 
@@ -164,18 +161,14 @@ const LastExecutedMethods = ({ fileName, selectedMinutes }) => {
                     borderRadius: 1
                   }}
                 >
-                  <Typography variant="body2" sx={{ 
-                    whiteSpace: 'pre-wrap', 
-                    fontFamily: 'monospace',
-                    fontSize: '0.85rem'
-                  }}>
+                   <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: '0.75rem'}}>
                     {trace}
                   </Typography>
                 </Box>
               ))}
             </Box>
           ) : (
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" sx={{ textAlign: 'center', py: 1 }}>
               No stack traces found for this method.
             </Typography>
           )}

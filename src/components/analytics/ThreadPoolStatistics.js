@@ -71,10 +71,10 @@ const ThreadPoolStatistics = ({ fileName, selectedMinutes }) => {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "row", gap: 2, padding: 2 }}>
+    <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
       {/* Table Section */}
       <Box sx={{ flex: 1, maxWidth: "70%" }}>
-        <Typography variant="h5" sx={{ mb: 1 }}>
+        <Typography variant="h6" sx={{ mb: 0.1, fontWeight: "bold" }}>
           Thread Pool Statistics Table
         </Typography>
         <Typography variant="body2" sx={{ mb: 1, color: "text.secondary" }}>
@@ -83,7 +83,7 @@ const ThreadPoolStatistics = ({ fileName, selectedMinutes }) => {
         <TableContainer
           component={Paper}
           sx={{
-            maxHeight: 400, // Fixed height for vertical scrolling
+            maxHeight: 350, // Fixed height for vertical scrolling
             overflowY: "auto",
             width: "100%",
           }}
@@ -95,8 +95,8 @@ const ThreadPoolStatistics = ({ fileName, selectedMinutes }) => {
                tableLayout: "fixed",
                "& th, & td": {
                 border: "1px solid #e0e0e0",
-                padding: "12px",
-                textAlign: "center",
+                padding: "5px",
+                textAlign: "center"
               },
             }}
           >
@@ -167,7 +167,7 @@ const ThreadPoolStatistics = ({ fileName, selectedMinutes }) => {
       {/* Pie Chart Section */}
       <Box sx={{ flex: 1, maxWidth: "30%", alignItems: "right", padding: 2 }}>
         <Box sx={{ width: "100%", height: 300 }}>
-          <Typography variant="h5" sx={{ mb: 2, textAlign: "center"}}>
+          <Typography variant="h6" sx={{ mb: 2, textAlign: "center",fontWeight: "bold"}}>
             Thread Pool Statistics Chart
           </Typography>
           <Pie data={pieChartData} options={mainChartOptions} />

@@ -18,13 +18,12 @@ import ComparativeAnalysis from "../components/analytics/ComparativeAnalysis";
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
-
 const apiBaseUrl = process.env.REACT_APP_API_URL
 
 const AnalyticsPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { fileName, selectedMinutes } = location.state || {};
+  const { fileName, selectedMinutes,analyticsType,uploadDate,threadDumpFiles} = location.state || {};
 
   const getNavigationItems = () => {
     const baseItems = [
@@ -95,15 +94,16 @@ const AnalyticsPage = () => {
 
       <Box sx={{ display: "flex", flex: 1, overflow: "hidden" }}>
         {/* Left Navigation Panel */}
-        <Box sx={{ width: 250, backgroundColor: "lightblue", padding: 2 }}>
-          <Typography variant="h5" fontWeight="bold" sx={{ mb: 2, textAlign: "center" }}>
+        <Box sx={{ width: { xs: 180, md: 210 }, backgroundColor: "lightblue", padding: { xs: 1, sm: 2 },overflowY: 'auto'}}>
+          <Typography variant="h5" fontWeight="bold" sx={{ mb: 2, textAlign: "center",fontSize: { xs: '1rem', sm: '1.15rem', md: '1.3rem' } }}>
             Thread Analytics
           </Typography>
-          <List>
+          <List dense>
             {navigationItems.map((item) => (
               <ListItem key={item} disablePadding>
-                <ListItemButton selected={selectedItem === item} onClick={() => setSelectedItem(item)}>
-                  <ListItemText primary={item} />
+                <ListItemButton selected={selectedItem === item} onClick={() => setSelectedItem(item)}    
+                sx={{py: { xs: 0.5, sm: 1 },'&.Mui-selected': { backgroundColor: '#1976d2', color: 'white'}}}>
+                  <ListItemText primary={item}  />
                 </ListItemButton>
               </ListItem>
             ))}
@@ -111,36 +111,66 @@ const AnalyticsPage = () => {
         </Box>
 
         {/* Right Panel */}
-        <Box sx={{ flex: 1, padding: 2, backgroundColor: "#f0f2f5" }}>
-          {/* Static File Info - Single Line Layout */}
-          <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: 2 }}>
-            <IconButton onClick={handleBack} sx={{ mr: 2 }} aria-label="back to dashboard">
-              <ArrowBackIcon />
-            </IconButton>
-            {fileName && (
-              <Typography variant="h6">
-                <strong>File Name:</strong> {fileName}
-              </Typography>
-            )}
-            {selectedMinutes && (
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Typography variant="h6" sx={{ mr: 1 }}>
-                  <strong>Timestamp:</strong>
-                </Typography>
-                {selectedMinutes.length > 1 && selectedItem !== "Comparative Analysis" ? (
-                  <Select value={selectedTimestamp} onChange={handleTimestampChange} size="small" sx={{ minWidth: 100 }}>
-                    {selectedMinutes.map((minute) => (
-                      <MenuItem key={minute} value={minute}>
-                        {minute}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                ) : (
-                  <Typography variant="h6">{selectedMinutes.join(", ")}</Typography>
+        <Box sx={{ flex: 1, padding: { xs: 1, sm: 2 }, backgroundColor: "#f0f2f5",overflowY: 'auto' }}>
+        {/* File Info Header */}
+        <Box sx={{
+            display: "flex", 
+            flexDirection: { xs: 'column', sm: 'row' },
+            justifyContent: "space-between", 
+            alignItems: { xs: 'flex-start', sm: 'center' },
+            gap: 1,
+            marginBottom: 2 
+        }}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <IconButton 
+                    onClick={handleBack} 
+                    sx={{ mr: 1 }} 
+                    aria-label="back to dashboard"
+                    size="small"
+                >
+                    <ArrowBackIcon fontSize="inherit" />
+                </IconButton>
+                {fileName && (
+                    <Typography variant="subtitle1" sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>
+                        <strong>File:</strong> {fileName}
+                    </Typography>
                 )}
-              </Box>
+            </Box>
+            {selectedMinutes && (
+                <Box sx={{ 
+                    display: "flex", 
+                    alignItems: "center",
+                    flexWrap: 'wrap',
+                    gap: 1
+                }}>
+                    <Typography variant="subtitle1" sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>
+                        <strong>Timestamp:</strong>
+                    </Typography>
+                    {selectedMinutes.length > 1 && selectedItem !== "Comparative Analysis" ? (
+                        <Select 
+                            value={selectedTimestamp} 
+                            onChange={handleTimestampChange} 
+                            size="small" 
+                            sx={{ 
+                                minWidth: 100,
+                                maxHeight: 30,
+                                fontSize: { xs: '0.875rem', sm: '1rem' }
+                            }}
+                        >
+                            {selectedMinutes.map((minute) => (
+                                <MenuItem key={minute} value={minute} sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>
+                                    {minute}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    ) : (
+                        <Typography variant="subtitle1" sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>
+                            {selectedMinutes.join(", ")}
+                        </Typography>
+                    )}
+                </Box>
             )}
-          </Box>
+        </Box>
           {/* Dynamic Content */}
           {selectedItem === "Thread Summary Count" && (
             <Box sx={{ minHeight: 400, position: "relative", width: "100%" }}>

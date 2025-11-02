@@ -101,20 +101,20 @@ const ThreadSummaryCount = ({ fileName, selectedMinutes, threadSummary, selected
       ) : (
         <>
           {/* Total Threads */}
-          <Paper sx={{ padding: 1, textAlign: "center", backgroundColor: "#f4f4f4", marginBottom: 2 }}>
-            <Typography variant="h5">Total Threads: {threadSummary[selectedMinutes].totalThreads}</Typography>
+          <Paper sx={{ padding: 0.2, textAlign: "center", backgroundColor: "#f4f4f4", marginBottom: 1 }}>
+            <Typography variant="h6">Total Threads: {threadSummary[selectedMinutes].totalThreads}</Typography>
           </Paper>
 
           <Grid container spacing={2}>
             {/* State Distribution */}
             <Grid item xs={12} md={6}>
               <Typography variant="h6">State Distribution Summary</Typography>
-              <Grid container spacing={2}>
+              <Grid container spacing={0.5}>
                 {threadStates.map((state, index) => (
                   <Grid item xs={6} key={index}>
                     <Paper sx={{ padding: 1, textAlign: "center", backgroundColor: "#f4f4f4" }}>
-                      <Typography variant="subtitle1">{state.state}</Typography>
-                      <Typography variant="h5">{state.count}</Typography>
+                      <Typography variant="subtitle2">{state.state}</Typography>
+                      <Typography variant="h6">{state.count}</Typography>
                       <Typography variant="body2">{state.percentage.toFixed(2)}%</Typography>
                       <Button type="button" onClick={() => setSelectedState(state.state)}>View Traces</Button>
                     </Paper>
@@ -126,26 +126,26 @@ const ThreadSummaryCount = ({ fileName, selectedMinutes, threadSummary, selected
             {/* Daemon vs Non-Daemon Threads Section */}
             <Grid item xs={12} md={6}>
               <Typography variant="h6">Daemon vs Non-Daemon Threads</Typography>
-              <Grid container spacing={2}>
+              <Grid container spacing={0.5}>
                 {[
                   { label: 'Daemon Threads', count: threadSummary[selectedMinutes].daemonThreadCount, percentage: threadSummary[selectedMinutes].daemonThreadPercentage },
                   { label: 'Non-Daemon Threads', count: threadSummary[selectedMinutes].nonDaemonThreadCount, percentage: threadSummary[selectedMinutes].nonDaemonThreadPercentage }
                 ].map((item, index) => (
                   <Grid item xs={6} key={index}>
-                    <Paper sx={{ padding: 1, textAlign: "center", backgroundColor: "#f4f4f4" }}>
-                      <Typography variant="subtitle1">{item.label}</Typography>
-                      <Typography variant="h5">{item.count}</Typography>
+                    <Paper sx={{ padding: 0.5, textAlign: "center", backgroundColor: "#f4f4f4" }}>
+                      <Typography variant="subtitle2">{item.label}</Typography>
+                      <Typography variant="h6">{item.count}</Typography>
                       <Typography variant="body2">{item.percentage.toFixed(2)}%</Typography>
                     </Paper>
                   </Grid>
                 ))}
-                <Grid container spacing={2}>
+                <Grid container spacing={0.5}>
                   <Grid item xs={6} textAlign="center">
-                    <Pie data={statePieData} options={{ responsive: true }} />
+                    <Pie data={statePieData} options={{ responsive: true, plugins: { legend: { labels: { font: {size:10, }}} } }}/>
                     <Typography variant="h7">State Distribution %</Typography>
                   </Grid>
                   <Grid item xs={6} textAlign="center">
-                    <Pie data={daemonPieData} options={{ responsive: true }} />
+                    <Pie data={daemonPieData} options={{ responsive: true, plugins: { legend: { labels: { font: {size:10, }}} } }}/>
                     <Typography variant="h7">Daemon Vs Non Daemon %</Typography>
                   </Grid>
                 </Grid>
@@ -156,18 +156,20 @@ const ThreadSummaryCount = ({ fileName, selectedMinutes, threadSummary, selected
           {/* Stacktrace Display Area */}
           {selectedState && (
             <Box sx={{ marginTop: 3, backgroundColor: '#fff', padding: 2, borderRadius: 2, maxHeight: '400px', overflowY: 'auto' }}>
-              <Typography variant="h6">Stacktrace for State: {selectedState}</Typography>
+              <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 'bold' }}>Stacktrace for State: {selectedState}</Typography>
               {stackTraces.length > 0 ? (
                 stackTraces.map((trace, index) => (
-                  <Box key={index} sx={{ marginBottom: 2 }} ref={index === stackTraces.length - 1 ? lastTraceElementRef : null}>
-                    <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>{trace}</Typography>
+                  <Box key={index} sx={{ mb: 2, p:1, backgroundColor: '#f9f9f9', borderRadius: 1}} ref={index === stackTraces.length - 1 ? lastTraceElementRef : null}>
+                    <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: '0.75rem'}}>{trace}</Typography>
                   </Box>
                 ))
               ) : (
-                <Typography>No stacktrace available for the selected state.</Typography>
+                !traceLoading && <Typography variant="body2">No stacktrace available for the selected state.</Typography>
               )}
-              {traceLoading && <Typography>Loading more stack traces...</Typography>}
-              {!hasMore && <Typography>No more stack traces to load.</Typography>}
+              {traceLoading && (<Typography variant="body2" sx={{ textAlign: 'center', py: 1 }}>Loading more stack traces...</Typography>
+              )}
+              {!hasMore && !traceLoading && (<Typography variant="body2" sx={{ textAlign: 'center', py: 1 }}>No more stack traces to load.</Typography>
+              )}
             </Box>
           )}
         </>

@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Box, 
-  Typography, 
-  Paper, 
-  Alert,
-  CircularProgress
-} from "@mui/material";
+import { Box, Typography, Paper, Alert, CircularProgress } from "@mui/material";
 import axios from "axios";
 
 const apiBaseUrl = process.env.REACT_APP_API_URL;
-
 const GCThreads = ({ fileName, selectedMinutes }) => {
   const [gcThreadCount, setGcThreadCount] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -51,16 +44,16 @@ const GCThreads = ({ fileName, selectedMinutes }) => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h6" sx={{ mb: 0.1, fontWeight: "bold" }}>
         GC Threads
       </Typography>
-      <Typography variant="body2" color="text.secondary" gutterBottom>
+      <Typography variant="body2" sx={{ mb: 1, color: "text.secondary" }}>
         Garbage collection threads count reported.
       </Typography>
 
       <Alert 
         severity={gcThreadCount > 10 ? "warning" : "success"} 
-        sx={{ mb: 3, width: '100%' }}
+        sx={{ mb: 1.5, width: '100%' }}
       >
         {gcThreadCount > 10 
             ? `High GC thread count (${gcThreadCount}), consider investigating` 
@@ -70,7 +63,7 @@ const GCThreads = ({ fileName, selectedMinutes }) => {
       <Paper 
         elevation={3} 
         sx={{ 
-          p: 3,
+          p: 2,
           textAlign: 'center',
           maxWidth: 200,
           backgroundColor: '#f5f5f5'
