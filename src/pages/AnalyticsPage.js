@@ -23,7 +23,7 @@ const apiBaseUrl = process.env.REACT_APP_API_URL
 const AnalyticsPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { fileName, selectedMinutes,analyticsType,uploadDate,threadDumpFiles} = location.state || {};
+  const { fileName, selectedMinutes} = location.state || {};
 
   const getNavigationItems = () => {
     const baseItems = [
