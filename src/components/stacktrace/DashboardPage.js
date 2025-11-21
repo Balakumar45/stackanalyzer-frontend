@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Box, Button, Grid, Container, Typography, Paper, CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '../Header';
+import Footer from '../Footer';
 
 const apiBaseUrl = process.env.REACT_APP_API_URL;
 
 const Dashboard = ({ fileName }) => {
+    const location = useLocation();
+    fileName = fileName || location.state?.fileName || "";
     const [hours, setHours] = useState([]); // List of available hours
     const [selectedHour, setSelectedHour] = useState(null);
     const [selectedMinutes, setSelectedMinutes] = useState([]);
@@ -68,7 +71,7 @@ const Dashboard = ({ fileName }) => {
     // Handle visualization
     const handleVisualize = () => {
         if (selectedMinutes.length > 0) {
-            navigate("/analytics", { state: { analyticsType: "stacktrace",fileName,selectedHour, selectedMinutes } });
+            navigate("/stacktrace/analytics", { state: { fileName,selectedHour,selectedMinutes } });
         }
     };
 

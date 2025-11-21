@@ -4,17 +4,17 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import ThreadSummaryCount from "../components/analytics/ThreadSummaryCount";
-import ThreadPoolStatistics from "../components/analytics/ThreadPoolStatistics";
-import IdenticalStackTraces from "../components/analytics/IdenticalStackTraces";
-import StackLength from "../components/analytics/StackLength";
-import GCThreads from "../components/analytics/GCThreads";
-import LastExecutedMethods from "../components/analytics/LastExecutedMethods";
-import BlockingThreads from "../components/analytics/BlockingThreads";
-import Deadlock from "../components/analytics/Deadlock";
-import ComparativeAnalysis from "../components/analytics/ComparativeAnalysis";
+import Header from "../Header";
+import Footer from "../Footer";
+import ThreadSummaryCount from "./ThreadSummaryCount";
+import ThreadPoolStatistics from "./ThreadPoolStatistics";
+import IdenticalStackTraces from "./IdenticalStackTraces";
+import StackLength from "./StackLength";
+import GCThreads from "./GCThreads";
+import LastExecutedMethods from "./LastExecutedMethods";
+import BlockingThreads from "./BlockingThreads";
+import Deadlock from "./Deadlock";
+import ComparativeAnalysis from "./ComparativeAnalysis";
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -63,7 +63,7 @@ const AnalyticsPage = () => {
 
   // Handle navigation (back to dashboard)
   const handleBack = () => {
-    navigate("/dashboard", { state: { fileName } });
+    navigate("/stacktrace/dashboard", { state: { fileName } });
   };
 
   // Fetch thread summary
@@ -96,7 +96,7 @@ const AnalyticsPage = () => {
         {/* Left Navigation Panel */}
         <Box sx={{ width: { xs: 180, md: 210 }, backgroundColor: "lightblue", padding: { xs: 1, sm: 2 },overflowY: 'auto'}}>
           <Typography variant="h5" fontWeight="bold" sx={{ mb: 2, textAlign: "center",fontSize: { xs: '1rem', sm: '1.15rem', md: '1.3rem' } }}>
-            Thread Analytics
+            Stacktrace Analytics
           </Typography>
           <List dense>
             {navigationItems.map((item) => (
